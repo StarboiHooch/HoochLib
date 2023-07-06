@@ -1,0 +1,3 @@
+[submodule "BasicSprites"]
+	path = BasicSprites
+	url = https://github.com/StarboiHooch/BasicSprites.git
