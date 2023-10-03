@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,6 +17,8 @@ public class EventTrigger_OnContact : MonoBehaviour
 
     [SerializeField]
     private bool active = true;
+    [SerializeField]
+    private float delay = 0f;
     public void SetActive(bool active) => this.active = active;
 
 
@@ -23,10 +26,7 @@ public class EventTrigger_OnContact : MonoBehaviour
     {
         if (onCollision && active)
         {
-            if (((1 << collision.gameObject.layer) & contactItems.value) != 0)
-            {
-                events.Invoke();
-            }
+            InvokeEvents(collision.collider);
         }
     }
 
@@ -34,10 +34,28 @@ public class EventTrigger_OnContact : MonoBehaviour
     {
         if (onTrigger && active)
         {
-            if (((1 << collision.gameObject.layer) & contactItems.value) != 0)
+            InvokeEvents(collision);
+        }
+    }
+
+    private void InvokeEvents(Collider2D collision)
+    {
+        if (((1 << collision.gameObject.layer) & contactItems.value) != 0)
+        {
+            if (delay != 0)
+            {
+                StartCoroutine(Delay(delay));
+            }
+            else
             {
                 events.Invoke();
             }
         }
     }
+    IEnumerator Delay(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        events.Invoke();
+    }
+
 }
