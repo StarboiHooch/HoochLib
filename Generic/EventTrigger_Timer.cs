@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Assets.Modules.GameJamHelpers.Generic
@@ -11,17 +12,39 @@ namespace Assets.Modules.GameJamHelpers.Generic
 
         [SerializeField]
         private float time = 1f;
+        [SerializeField]
+        private bool repeat = true;
 
-        private float timer = 0f;
+        [SerializeField]
+        private bool playOnStart = false;
+        private bool coroutineActive = false;
 
-
-        private void Update()
+        private void Start()
         {
-            if (timer >= time)
+            if (playOnStart)
             {
-                events.Invoke();
+                Play();
             }
-            timer += Time.deltaTime;
+        }
+
+        public void Play()
+        {
+            if (!coroutineActive)
+            {
+                StartCoroutine(InvokeAfterDelay());
+            }
+        }
+
+        IEnumerator InvokeAfterDelay()
+        {
+            coroutineActive = true;
+            yield return new WaitForSeconds(time);
+            events.Invoke();
+            if (repeat)
+            {
+                StartCoroutine(InvokeAfterDelay());
+            }
+            coroutineActive = false;
         }
     }
 }

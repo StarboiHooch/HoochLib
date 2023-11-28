@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Assets.Modules.GameJamHelpers.Generic
 {
@@ -12,6 +13,7 @@ namespace Assets.Modules.GameJamHelpers.Generic
         [Tooltip("Leave at 0 to emit the prefab every frame")]
         private float interval = 0f;
         private float timer = 0f;
+        private float lifetime = 0f;
 
         // Update is called once per frame
         void FixedUpdate()
@@ -31,12 +33,22 @@ namespace Assets.Modules.GameJamHelpers.Generic
         {
             if (prefab != null)
             {
-                Instantiate(prefab, this.gameObject.transform.position, Quaternion.identity);
+                GameObject instantiatedObject = Instantiate(prefab, this.gameObject.transform.position, Quaternion.identity);
+                if (lifetime > 0f)
+                {
+                    StartCoroutine(DestroyAfterSeconds(instantiatedObject));
+                }
             }
             else
             {
                 Debug.LogError("No prefab selected for prefabEmitter");
             }
+        }
+
+        private IEnumerator DestroyAfterSeconds(GameObject instantiatedObject)
+        {
+            yield return new WaitForSeconds(lifetime);
+            Destroy(instantiatedObject);
         }
 
         public void SetActive(bool active)

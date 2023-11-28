@@ -1,12 +1,9 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
-namespace Assets.Modules.GameJamHelpers.Generic
+namespace GameJamHelpers.Generic
 {
-    public class EventTrigger_OnContactExit : MonoBehaviour
+    public class EventTrigger_OnContactExit : EventTrigger
     {
-        [SerializeField]
-        private UnityEvent events = new UnityEvent();
 
         [SerializeField]
         private bool onCollision = true;
@@ -16,18 +13,13 @@ namespace Assets.Modules.GameJamHelpers.Generic
         [SerializeField]
         private LayerMask contactItems;
 
-        [SerializeField]
-        private bool active = true;
-        public void SetActive(bool active) => this.active = active;
-
-
         private void OnCollisionExit2D(Collision2D collision)
         {
             if (onCollision && active)
             {
                 if (((1 << collision.gameObject.layer) & contactItems.value) != 0)
                 {
-                    events.Invoke();
+                    InvokeEvents();
                 }
             }
         }
@@ -38,7 +30,7 @@ namespace Assets.Modules.GameJamHelpers.Generic
             {
                 if (((1 << collision.gameObject.layer) & contactItems.value) != 0)
                 {
-                    events.Invoke();
+                    InvokeEvents();
                 }
             }
         }

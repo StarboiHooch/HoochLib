@@ -10,6 +10,10 @@ public class MessageLogger : MonoBehaviour
     {
         Debug.Log("Testing 123");
     }
+    public void LogMessage(string message)
+    {
+        Debug.Log(message);
+    }
 
     public void LogMessage(int index)
     {
