@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 namespace GameJamHelpers.Generic
 {
     public class EventTrigger_OnContact : EventTrigger
@@ -14,6 +13,7 @@ namespace GameJamHelpers.Generic
         [SerializeField]
         private LayerMask contactItems;
 
+
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (onCollision && active)
@@ -24,6 +24,7 @@ namespace GameJamHelpers.Generic
                 }
             }
         }
+
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

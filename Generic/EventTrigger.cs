@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 namespace GameJamHelpers.Generic
 {
-    public abstract class EventTrigger : MonoBehaviour
+    public class EventTrigger : MonoBehaviour
     {
         [SerializeField]
         protected UnityEvent events = new UnityEvent();
@@ -15,11 +15,15 @@ namespace GameJamHelpers.Generic
         protected float delay = 0f;
         public void SetActive(bool active) => this.active = active;
 
+        public void AddAction(UnityAction action)
+        {
+            events.AddListener(action);
+        }
         public void InvokeEvents()
         {
             if (delay != 0)
             {
-                StartCoroutine(Delay(delay));
+                StartCoroutine(InvokeEventsAfterDelay(delay));
             }
             else
             {
@@ -27,7 +31,7 @@ namespace GameJamHelpers.Generic
             }
         }
 
-        IEnumerator Delay(float duration)
+        IEnumerator InvokeEventsAfterDelay(float duration)
         {
             yield return new WaitForSeconds(duration);
             events.Invoke();

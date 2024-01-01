@@ -1,19 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
-namespace Assets.Modules.GameJamHelpers.Generic
+namespace GameJamHelpers.Generic
 {
-    public class EventTrigger_Timer : MonoBehaviour
+    public class EventTrigger_Timer : EventTrigger
     {
 
         [SerializeField]
-        private UnityEvent events = new UnityEvent();
-
-        [SerializeField]
         private float time = 1f;
-        [SerializeField]
-        private bool repeat = true;
 
         [SerializeField]
         private bool playOnStart = false;
@@ -21,30 +15,30 @@ namespace Assets.Modules.GameJamHelpers.Generic
 
         private void Start()
         {
+            coroutineActive = false;
             if (playOnStart)
             {
-                Play();
+                StartCoroutine(Play());
             }
         }
 
-        public void Play()
+        public IEnumerator Play()
+        {
+            yield return new WaitForSeconds(delay);
+            events.Invoke();
+            StartCoroutine(StartTimer());
+        }
+
+        IEnumerator StartTimer()
         {
             if (!coroutineActive)
             {
-                StartCoroutine(InvokeAfterDelay());
+                coroutineActive = true;
+                yield return new WaitForSeconds(time);
+                events.Invoke();
+                coroutineActive = false;
+                StartCoroutine(StartTimer());
             }
-        }
-
-        IEnumerator InvokeAfterDelay()
-        {
-            coroutineActive = true;
-            yield return new WaitForSeconds(time);
-            events.Invoke();
-            if (repeat)
-            {
-                StartCoroutine(InvokeAfterDelay());
-            }
-            coroutineActive = false;
         }
     }
 }
