@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Modules.GameJamHelpers.Generic
 {
@@ -13,7 +14,11 @@ namespace Assets.Modules.GameJamHelpers.Generic
         [Tooltip("Leave at 0 to emit the prefab every frame")]
         private float interval = 0f;
         private float timer = 0f;
+        [SerializeField]
         private float lifetime = 0f;
+
+        [SerializeField]
+        private UnityEvent<GameObject> onInstantiate;
 
         // Update is called once per frame
         void FixedUpdate()
@@ -33,7 +38,8 @@ namespace Assets.Modules.GameJamHelpers.Generic
         {
             if (prefab != null)
             {
-                GameObject instantiatedObject = Instantiate(prefab, this.gameObject.transform.position, Quaternion.identity);
+                GameObject instantiatedObject = Instantiate(prefab, this.gameObject.transform.position, Quaternion.identity, this.GetComponentInParent<Transform>());
+                onInstantiate?.Invoke(instantiatedObject);
                 if (lifetime > 0f)
                 {
                     StartCoroutine(DestroyAfterSeconds(instantiatedObject));
