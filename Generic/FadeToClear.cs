@@ -1,53 +1,45 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
-namespace Assets.Modules.GameJamHelpers.Generic
+namespace GameJamHelpers.Generic
 {
+
     public class FadeToClear : MonoBehaviour
     {
         [SerializeField]
         private bool fadeOnStart = true;
+
         [SerializeField]
-        private float fadeTime = 1f;
+        private float time = 5f;
         private float timer = 0f;
-        private bool fading = false;
+
+        [SerializeField]
+        private bool destroyOnFaded = true;
+
+        private SpriteRenderer sr;
         private Color startColor;
-
-
-        // Use this for initialization
         void Start()
         {
-            if (fadeOnStart)
-            {
-                StartFade();
-            }
+            sr = GetComponent<SpriteRenderer>();
+            startColor = sr.color;
+            if (fadeOnStart) { StartCoroutine(Fade()); }
+
         }
 
-        // Update is called once per frame
-        void Update()
+        private IEnumerator Fade()
         {
-            if (fading)
+            while (timer < time)
             {
-                if (timer <= fadeTime)
-                {
-                    GetComponent<SpriteRenderer>().color = new Color(startColor.r, startColor.g, startColor.b, Mathf.Lerp(startColor.a, 0, timer / fadeTime));
-                }
-                else
-                {
-                    GetComponent<SpriteRenderer>().color = new Color(startColor.r, startColor.g, startColor.b, 0f);
-                    fading = false;
-                }
+                sr.color = new Color(startColor.r, startColor.g, startColor.b, Mathf.Lerp(startColor.a, 0, timer / time));
                 timer += Time.deltaTime;
+                yield return null;
+            }
+            sr.color = new Color(startColor.r, startColor.g, startColor.b, 0);
+            if (destroyOnFaded)
+            {
+                Destroy(this.gameObject);
             }
         }
 
-        public void StartFade()
-        {
-            if (!fading)
-            {
-                timer = 0f;
-                startColor = GetComponent<SpriteRenderer>().color;
-                fading = true;
-            }
-        }
     }
 }

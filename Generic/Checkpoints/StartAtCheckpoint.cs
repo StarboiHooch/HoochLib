@@ -1,7 +1,7 @@
-﻿using Assets.Modules.GameJamHelpers.Generic.Checkpoints;
+﻿using GameJamHelpers.Generic.Checkpoints;
 using UnityEngine;
 
-namespace Assets.Modules.GameJamHelpers.Generic
+namespace GameJamHelpers.Generic
 {
     public class StartAtCheckpoint : MonoBehaviour
     {

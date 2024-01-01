@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
-namespace Assets.Modules.GameJamHelpers.Generic.Checkpoints
+namespace GameJamHelpers.Generic.Checkpoints
 {
     public class CheckpointSaver : MonoBehaviour
     {
@@ -9,8 +10,15 @@ namespace Assets.Modules.GameJamHelpers.Generic.Checkpoints
         public bool Active => active;
 
 
+        [SerializeField]
         private Checkpoint lastCheckpoint = null;
         private Vector3 startPosition;
+
+        [SerializeField]
+        private UnityEvent onCheckpointSaved;
+
+        [SerializeField]
+        private GameObject item;
 
         private void Start()
         {
@@ -20,6 +28,7 @@ namespace Assets.Modules.GameJamHelpers.Generic.Checkpoints
         public void SaveCheckpoint(Checkpoint checkpoint)
         {
             lastCheckpoint = checkpoint;
+            onCheckpointSaved?.Invoke();
         }
 
         public void ClearCheckpoint() { lastCheckpoint = null; }
@@ -37,6 +46,19 @@ namespace Assets.Modules.GameJamHelpers.Generic.Checkpoints
             else
             {
                 this.gameObject.transform.position = startPosition;
+            }
+        }
+
+        public void SendToCheckpoint()
+        {
+            if (lastCheckpoint != null)
+            {
+                lastCheckpoint.ActivateCheckpoint();
+                item.transform.position = lastCheckpoint.SpawnPosition;
+            }
+            else
+            {
+                item.transform.position = startPosition;
             }
         }
 
