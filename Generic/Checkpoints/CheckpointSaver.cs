@@ -23,6 +23,7 @@ namespace GameJamHelpers.Generic.Checkpoints
         private void Start()
         {
             startPosition = transform.position;
+            if (lastCheckpoint != null) { GoToCheckpoint(); }
         }
 
         public void SaveCheckpoint(Checkpoint checkpoint)

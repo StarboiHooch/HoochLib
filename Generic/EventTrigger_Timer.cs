@@ -18,11 +18,16 @@ namespace GameJamHelpers.Generic
             coroutineActive = false;
             if (playOnStart)
             {
-                StartCoroutine(Play());
+                StartCoroutine(PlayCoroutine());
             }
         }
 
-        public IEnumerator Play()
+        public void Play()
+        {
+            StartCoroutine(PlayCoroutine());
+        }
+
+        public IEnumerator PlayCoroutine()
         {
             yield return new WaitForSeconds(delay);
             events.Invoke();

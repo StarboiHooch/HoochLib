@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Assets.Modules.GameJamHelpers.Generic
+namespace GameJamHelpers.Generic
 {
     public class PrefabEmitter : MonoBehaviour
     {
@@ -16,6 +16,8 @@ namespace Assets.Modules.GameJamHelpers.Generic
         private float timer = 0f;
         [SerializeField]
         private float lifetime = 0f;
+        [SerializeField]
+        private bool makeObjectsChild = false;
 
         [SerializeField]
         private UnityEvent<GameObject> onInstantiate;
@@ -38,7 +40,7 @@ namespace Assets.Modules.GameJamHelpers.Generic
         {
             if (prefab != null)
             {
-                GameObject instantiatedObject = Instantiate(prefab, this.gameObject.transform.position, Quaternion.identity, this.GetComponentInParent<Transform>());
+                GameObject instantiatedObject = Instantiate(prefab, this.gameObject.transform.position, Quaternion.identity, makeObjectsChild ? this.GetComponentInParent<Transform>() : null);
                 onInstantiate?.Invoke(instantiatedObject);
                 if (lifetime > 0f)
                 {

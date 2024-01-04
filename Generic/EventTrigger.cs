@@ -21,13 +21,16 @@ namespace GameJamHelpers.Generic
         }
         public void InvokeEvents()
         {
-            if (delay != 0)
+            if (active)
             {
-                StartCoroutine(InvokeEventsAfterDelay(delay));
-            }
-            else
-            {
-                events.Invoke();
+                if (delay != 0)
+                {
+                    StartCoroutine(InvokeEventsAfterDelay(delay));
+                }
+                else
+                {
+                    events.Invoke();
+                }
             }
         }
 

@@ -10,6 +10,8 @@ namespace GameJamHelpers.Generic
 
         [SerializeField]
         private int target;
+        [SerializeField]
+        private bool onlyTriggerOnTarget = true;
 
         // Use this for initialization
         void Start()
@@ -19,7 +21,7 @@ namespace GameJamHelpers.Generic
 
         private void OnCountChanged(object sender, EventArgs e)
         {
-            if (counter.Count == target)
+            if (counter.Count == target || !onlyTriggerOnTarget)
             {
                 InvokeEvents();
             }
