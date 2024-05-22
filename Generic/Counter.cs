@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace GameJamHelpers.Generic
+namespace HoochLib.Generic
 {
     public class Counter : MonoBehaviour
     {

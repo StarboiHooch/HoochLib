@@ -1,4 +1,4 @@
-﻿namespace Assets.Modules.GameJamHelpers.Generic
+﻿namespace Assets.Modules.HoochLib.Generic
 {
     public static class MathUtility
     {

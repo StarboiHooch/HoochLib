@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -5,6 +6,8 @@ public class Damageable : MonoBehaviour
 {
     [SerializeField]
     private UnityEvent onHit = new UnityEvent();
+
+    public EventHandler<EventArgs> onHitCallback;
 
     [SerializeField]
     private UnityEvent onDeath = new UnityEvent();
@@ -38,8 +41,9 @@ public class Damageable : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (damage > 0)
+        if (damage >= 0)
         {
+            onHitCallback?.Invoke(this, EventArgs.Empty);
             onHit.Invoke();
             health -= damage;
             if (health <= 0)

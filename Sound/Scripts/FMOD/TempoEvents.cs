@@ -35,7 +35,7 @@ public class TempoEvents : MonoBehaviour
         musicEmitter.Play();
         musicInstance = musicEmitter.EventInstance;
 
-        // Pin the class that will store the data modified during the callback
+        // Pin the class that will store the value modified during the callback
         timelineHandle = GCHandle.Alloc(timelineInfo);
         // Pass the object through the userdata of the instance
         musicInstance.setUserData(GCHandle.ToIntPtr(timelineHandle));
@@ -67,7 +67,7 @@ public class TempoEvents : MonoBehaviour
     {
         FMOD.Studio.EventInstance instance = new FMOD.Studio.EventInstance(instancePtr);
 
-        // Retrieve the user data
+        // Retrieve the user value
         IntPtr timelineInfoPtr;
         FMOD.RESULT result = instance.getUserData(out timelineInfoPtr);
         if (result != FMOD.RESULT.OK)

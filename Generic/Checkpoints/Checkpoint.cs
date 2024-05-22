@@ -1,4 +1,4 @@
-using GameJamHelpers.Generic.Checkpoints;
+using HoochLib.Generic.Checkpoints;
 using UnityEngine;
 using UnityEngine.Events;
 

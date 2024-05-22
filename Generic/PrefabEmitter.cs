@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace GameJamHelpers.Generic
+namespace HoochLib.Generic
 {
     public class PrefabEmitter : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace GameJamHelpers.Generic.Checkpoints
+namespace HoochLib.Generic.Checkpoints
 {
     public class CheckpointSaver : MonoBehaviour
     {

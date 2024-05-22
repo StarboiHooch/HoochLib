@@ -5,9 +5,14 @@ public class FMODUtility : MonoBehaviour
 {
     [SerializeField]
     private Slider slider;
+    [SerializeField]
+    private bool mute;
+
+    FMODUnity.StudioEventEmitter studioEventEmitter;
 
     private void Start()
     {
+        studioEventEmitter = GetComponent<FMODUnity.StudioEventEmitter>();
         if (slider != null)
         {
             if (PlayerPrefs.HasKey("Volume"))
@@ -15,11 +20,20 @@ public class FMODUtility : MonoBehaviour
                 slider.value = PlayerPrefs.GetFloat("Volume");
             }
         }
+        if (mute)
+        {
+            studioEventEmitter.EventInstance.setVolume(0f);
+        }
     }
     public void SetVolume(float volume)
     {
         PlayerPrefs.SetFloat("Volume", volume);
-        FMODUnity.StudioEventEmitter studioEventEmitter = GetComponent<FMODUnity.StudioEventEmitter>();
         studioEventEmitter.EventInstance.setVolume(volume);
     }
+
+    public void SetParameter(string name, float value)
+    {
+        studioEventEmitter.SetParameter(name, value);
+    }
+
 }

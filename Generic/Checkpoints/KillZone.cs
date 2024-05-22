@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameJamHelpers.Generic.Checkpoints
+namespace HoochLib.Generic.Checkpoints
 {
     public class KillZone : MonoBehaviour
     {

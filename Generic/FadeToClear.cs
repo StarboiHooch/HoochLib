@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace GameJamHelpers.Generic
+namespace HoochLib.Generic
 {
 
     public class FadeToClear : MonoBehaviour

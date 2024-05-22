@@ -1,7 +1,7 @@
-﻿using GameJamHelpers.Generic.Checkpoints;
+﻿using HoochLib.Generic.Checkpoints;
 using UnityEngine;
 
-namespace GameJamHelpers.Generic
+namespace HoochLib.Generic
 {
     public class StartAtCheckpoint : MonoBehaviour
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace GameJamHelpers.Sound.Scripts.FMOD
+namespace HoochLib.Sound.Scripts.FMOD
 {
     [Serializable]
     public class Bar
