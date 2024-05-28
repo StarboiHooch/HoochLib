@@ -17,6 +17,8 @@ namespace HoochLib.Sound.Scripts.FMOD
 
         [SerializeField]
         private List<Bar> ActiveBeats;
+        
+        private BeatCallbackEmitter beatCallbackEmitter;
         private int currentBarIndex = 0;
 
         private bool firstBar = true;
@@ -29,12 +31,19 @@ namespace HoochLib.Sound.Scripts.FMOD
         {
             firstBar = true;
             currentBarIndex = 0;
-            BeatCallbackEmitter.BeatEvent += HandleBeatEvent;
         }
 
+        public void SetBeatCallbackEmitter(BeatCallbackEmitter beatCallbackEmitter)
+        {
+            this.beatCallbackEmitter = beatCallbackEmitter;
+            beatCallbackEmitter.OnBeat += HandleBeatEvent;
+        }
         private void OnDestroy()
         {
-            BeatCallbackEmitter.BeatEvent -= HandleBeatEvent;
+            if (beatCallbackEmitter != null)
+            {
+                beatCallbackEmitter.OnBeat -= HandleBeatEvent;
+            }
         }
         private void HandleBeatEvent(object sender, BeatEventArgs e)
         {
