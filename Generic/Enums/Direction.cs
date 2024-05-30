@@ -1,5 +1,8 @@
-﻿namespace HoochLib.Generic
+﻿using System;
+
+namespace HoochLib.Generic
 {
+    [Serializable]
     public enum Direction
     {
         Up,
