@@ -46,7 +46,16 @@ public class SceneTransition : MonoBehaviour
     public void AnimationOutEnded()
     {
         TransitionOutAnimationEnded?.Invoke();
+    }
+
+    public void GoToRequestedScene()
+    {
         SceneManager.LoadScene(sceneToTransitionTo, LoadSceneMode.Single);
+    }
+    
+    public void GoToScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
     public void AnimationInEnded()
     {
