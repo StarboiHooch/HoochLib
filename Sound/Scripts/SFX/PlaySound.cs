@@ -11,5 +11,9 @@ public class PlaySound : MonoBehaviour
         if (soundManager == null) soundManager = GameObject.FindWithTag("SoundManager").GetComponent<SoundManager>();
     }
 
-    public void PlayOneShot(){soundManager.PlaySound(sound);}
+    public void PlayOneShot()
+    {
+        if(soundManager != null)
+            soundManager.PlaySound(sound);
+    }
 }

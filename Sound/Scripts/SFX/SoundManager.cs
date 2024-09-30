@@ -10,19 +10,21 @@ public class SoundManager: MonoBehaviour
 
     private void Start()
     {
-        var volume = saveData.GetValue<float>(SAVE_DATA_VOLUME_KEY);
-        SetVolume(volume);
+        if (saveData.HasKey(SAVE_DATA_VOLUME_KEY))
+        {
+            var volume = saveData.GetValue<float>(SAVE_DATA_VOLUME_KEY);
+            SetVolume(volume);
+        }
     }
 
-    private void SetVolume(float vol)
+    public void SetVolume(float vol)
     {
-        saveData.SaveValue(SAVE_DATA_VOLUME_KEY, vol);
         oneShotSource.volume = vol;
     }
 
     public void PlaySound(string sound)
     {
         AudioClip clip = soundLibrary.GetSound(sound);
-        oneShotSource.PlayOneShot(clip, 1f);
+        oneShotSource.PlayOneShot(clip);
     }
 }

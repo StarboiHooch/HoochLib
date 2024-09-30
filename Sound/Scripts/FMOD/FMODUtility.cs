@@ -4,7 +4,9 @@ using UnityEngine.UI;
 public class FMODUtility : MonoBehaviour
 {
     [SerializeField]
-    private Slider slider;
+    private SaveData saveData;
+    [SerializeField]
+    private string key;
     [SerializeField]
     private bool mute;
 
@@ -13,21 +15,17 @@ public class FMODUtility : MonoBehaviour
     private void Start()
     {
         studioEventEmitter = GetComponent<FMODUnity.StudioEventEmitter>();
-        if (slider != null)
+        if (saveData.HasKey(key))
         {
-            if (PlayerPrefs.HasKey("Volume"))
-            {
-                slider.value = PlayerPrefs.GetFloat("Volume");
-            }
+            SetVolume(saveData.GetValue<float>(key));
         }
         if (mute)
         {
             studioEventEmitter.EventInstance.setVolume(0f);
         }
     }
-    public void SetVolume(float volume)
+    public void SetVolume(float volume, bool saveValue = false)
     {
-        PlayerPrefs.SetFloat("Volume", volume);
         studioEventEmitter.EventInstance.setVolume(volume);
     }
 
