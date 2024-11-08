@@ -67,8 +67,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46a57334de232b549bd9e8e97658a905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TransitionOutAnimationName: CircleTransitionClose
-  TransitionInAnimationName: CircleTransitionOpen
+  transitionOutAnimationName: CircleTransitionClose
+  transitionInAnimationName: CircleTransitionOpen
+  setActiveScene: 1
   saveData: {fileID: 11400000, guid: c98848ceb8d30844fac241bfc9ba9ee0, type: 2}
   panel: {fileID: 1682237305872341869}
 --- !u!114 &320518487320580681
@@ -237,7 +238,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &1678154782637750931
 MonoBehaviour:

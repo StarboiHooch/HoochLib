@@ -1,30 +1,24 @@
+using FMODUnity;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class FMODUtility : MonoBehaviour
 {
-    [SerializeField]
-    private SaveData saveData;
-    [SerializeField]
-    private string key;
-    [SerializeField]
-    private bool mute;
+    [SerializeField] private SaveData saveData;
 
-    FMODUnity.StudioEventEmitter studioEventEmitter;
+    [SerializeField] private string key;
 
-    private void Start()
+    [SerializeField] private bool mute;
+
+    private StudioEventEmitter studioEventEmitter;
+
+    public void LoadVolume()
     {
-        studioEventEmitter = GetComponent<FMODUnity.StudioEventEmitter>();
-        if (saveData.HasKey(key))
-        {
-            SetVolume(saveData.GetValue<float>(key));
-        }
-        if (mute)
-        {
-            studioEventEmitter.EventInstance.setVolume(0f);
-        }
+        if (studioEventEmitter == null) studioEventEmitter = GetComponent<StudioEventEmitter>();
+        if (saveData.HasKey(key)) SetVolume(saveData.GetValue<float>(key));
+        if (mute) studioEventEmitter.EventInstance.setVolume(0f);
     }
-    public void SetVolume(float volume, bool saveValue = false)
+
+    public void SetVolume(float volume)
     {
         studioEventEmitter.EventInstance.setVolume(volume);
     }
@@ -33,5 +27,4 @@ public class FMODUtility : MonoBehaviour
     {
         studioEventEmitter.SetParameter(name, value);
     }
-
 }

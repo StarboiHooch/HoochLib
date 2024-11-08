@@ -3,13 +3,14 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class SceneTransition : MonoBehaviour
 {
-    [SerializeField] private string TransitionOutAnimationName;
-    [SerializeField] private string TransitionInAnimationName;
-
+    [SerializeField] private string transitionOutAnimationName;
+    [SerializeField] private string transitionInAnimationName;
+    [SerializeField] private bool setActiveScene = true;
     [SerializeField] private SaveData saveData;
     [SerializeField] private Image panel;
 
@@ -24,11 +25,19 @@ public class SceneTransition : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         PlayTransitionInAnimation();
+        if(setActiveScene)
+            saveData.SaveValue("CurrentScene", SceneManager.GetActiveScene().name);
     }
 
     public void TransitionToScene(string scene)
     {
-        saveData.SaveValue("PreviousScene", SceneManager.GetActiveScene().name);
+        TransitionToScene(scene, true);
+    }
+    
+    public void TransitionToScene(string scene, bool savePreviousScene)
+    {
+        if(savePreviousScene)
+            saveData.SaveValue("PreviousScene", SceneManager.GetActiveScene().name);
         sceneToTransitionTo = scene;
         OnTransitionOutEnded += GoToSceneOnTransitionEnded;
         PlayTransitionOutAnimation();
@@ -42,12 +51,12 @@ public class SceneTransition : MonoBehaviour
 
     public void PlayTransitionOutAnimation()
     {
-        animator.Play(TransitionOutAnimationName);
+        animator.Play(transitionOutAnimationName);
     }
 
     public void PlayTransitionInAnimation()
     {
-        animator.Play(TransitionInAnimationName);
+        animator.Play(transitionInAnimationName);
     }
 
     public void AnimationInEnded()
