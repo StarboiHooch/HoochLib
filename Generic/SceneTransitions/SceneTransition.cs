@@ -42,6 +42,11 @@ public class SceneTransition : MonoBehaviour
         OnTransitionOutEnded += GoToSceneOnTransitionEnded;
         PlayTransitionOutAnimation();
     }
+    public void TransitionToScene(string scene, bool savePreviousScene, string transitionName)
+    {
+        transitionOutAnimationName = transitionName;
+        TransitionToScene(scene, savePreviousScene);
+    }
 
     private void GoToSceneOnTransitionEnded(object sender, EventArgs e)
     {

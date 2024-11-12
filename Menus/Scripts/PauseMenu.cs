@@ -3,10 +3,10 @@ using UnityEngine.Events;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField]
-    private UnityEvent onPaused;
-    [SerializeField]
-    private UnityEvent onUnpaused;
+    [SerializeField] private UnityEvent onPaused;
+    [SerializeField] private UnityEvent onUnpaused;
+    [SerializeField] private SceneTransition sceneTransition;
+    
     private bool isPaused = false;
 
     private void Start()
@@ -31,6 +31,12 @@ public class PauseMenu : MonoBehaviour
             Time.timeScale = 1;
             onUnpaused.Invoke();
         }
+    }
+
+    public void GoToMainMenu()
+    {
+        sceneTransition.TransitionToScene("MainMenu", false, "FadeToBlack");
+        Time.timeScale = 1;
     }
 
     public void CloseGame()
