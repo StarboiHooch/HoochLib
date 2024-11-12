@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,6 +7,8 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private UnityEvent onPaused;
     [SerializeField] private UnityEvent onUnpaused;
     [SerializeField] private SceneTransition sceneTransition;
+    [SerializeField] private TMP_Text currentObjective;
+    [SerializeField] private SaveData saveData;
     
     private bool isPaused = false;
 
@@ -24,6 +27,8 @@ public class PauseMenu : MonoBehaviour
         if (pause)
         {
             Time.timeScale = 0;
+            var currentMilestone = saveData.GetMilestone(saveData.GetValue<string>("MainMission"));
+            currentObjective.SetText("Current Mission: " + currentMilestone.Objective);
             onPaused.Invoke();
         }
         else
@@ -33,15 +38,17 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    public void GoToMainMenu()
+    public async void GoToMainMenu()
     {
+        await saveData.SaveAsync();
         sceneTransition.TransitionToScene("MainMenu", false, "FadeToBlack");
         Time.timeScale = 1;
     }
 
-    public void CloseGame()
+    public async void CloseGame()
     {
 #if UNITY_STANDALONE
+        await saveData.SaveAsync();
         Application.Quit();
 #endif
 #if UNITY_EDITOR
