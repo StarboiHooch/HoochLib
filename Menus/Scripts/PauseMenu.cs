@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,13 +10,12 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private SceneTransition sceneTransition;
     [SerializeField] private TMP_Text currentObjective;
     [SerializeField] private SaveData saveData;
-    
     private bool isPaused = false;
+    private float previousTimeScale;
 
-    private void Start()
-    {
-        Pause(false);
-    }
+    public bool IsPaused => isPaused;
+    public event EventHandler OnPaused;
+    public event EventHandler OnUnpaused;
     public void TogglePause()
     {
         Pause(!isPaused);
@@ -26,15 +26,18 @@ public class PauseMenu : MonoBehaviour
         isPaused = pause;
         if (pause)
         {
+            previousTimeScale = Time.timeScale;
             Time.timeScale = 0;
             var currentMilestone = saveData.GetMilestone(saveData.GetValue<string>("MainMission"));
             currentObjective.SetText("Current Mission: " + currentMilestone.Objective);
             onPaused.Invoke();
+            OnPaused?.Invoke(this, EventArgs.Empty);
         }
         else
         {
-            Time.timeScale = 1;
+            Time.timeScale = previousTimeScale;
             onUnpaused.Invoke();
+            OnUnpaused?.Invoke(this, EventArgs.Empty);
         }
     }
 
