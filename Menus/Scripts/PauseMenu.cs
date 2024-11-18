@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -16,6 +17,12 @@ public class PauseMenu : MonoBehaviour
     public bool IsPaused => isPaused;
     public event EventHandler OnPaused;
     public event EventHandler OnUnpaused;
+    
+    
+    public void OnPauseInput(InputAction.CallbackContext context)
+    {
+        if(context.performed) TogglePause();
+    }
     public void TogglePause()
     {
         Pause(!isPaused);
