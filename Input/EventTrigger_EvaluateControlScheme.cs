@@ -20,7 +20,6 @@ public class EventTrigger_EvaluateControlScheme : EventTrigger
     private string GetControlScheme()
     {
         var controlScheme = playerInput.currentControlScheme;
-        Debug.Log(controlScheme);
         return controlScheme;
     }
 }
